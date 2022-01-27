@@ -7,6 +7,8 @@
 #include <iostream>
 using namespace std;
 
+
+// Function that sorts Array of 0s, 1s and 2s.
 void arrSort(int arr[], int size){
     vector<int> arr0, arr1, arr2, arrx;
     
