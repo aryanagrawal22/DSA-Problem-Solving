@@ -24,7 +24,7 @@ class GFG
 //User function Template for Java
 
 class Solution{
-    static String longestPalin(String str){
+    static int longestPalin(String str){
         int n = str.length();
  
     // All subStrings of length 1
