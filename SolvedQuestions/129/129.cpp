@@ -1,7 +1,4 @@
-// { Driver Code Starts
-//Initial template code for C++
-
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 struct Node
@@ -26,45 +23,66 @@ void loopHere(Node* head, Node* tail, int position)
     tail->next = walk;
 }
 
-
- // } Driver Code Ends
-//User function template for C++
-
-/*
-
-struct Node
+bool isLoop(Node* head)
 {
-    int data;
-    struct Node *next;
-    Node(int x) {
-        data = x;
-        next = NULL;
+    if(!head) return false;
+    
+    Node* fast = head->next;
+    Node* slow = head;
+    
+    while( fast != slow)
+    {
+        if( !fast || !fast->next ) return false;
+        fast=fast->next->next;
+        slow=slow->next;
     }
+    
+    return true;
+}
 
-*/
+int length(Node* head)
+{
+    int ret = 0;
+    while(head)
+    {
+        ret++;
+        head = head->next;
+    }
+    return ret;
+}
+
+#include<bits/stdc++.h>
 class Solution
 {
     public:
-    //Function to check if the linked list has a loop.
-    bool detectLoop(Node* head)
+    
+    Node* detectLoop(Node* head)
     {
         unordered_set <Node*> us;
         Node *node = head;
         
         while(node!=NULL){
-            if(us.find(node) != us.end()){
-                return true;
-            }
             us.insert(node);
+            if(us.find(node->next) != us.end()){
+                return node;
+            }
+            
             node = node->next;
         }
         
-        return false;
+        return NULL;
+    }
+    
+    
+    void removeLoop(Node* head)
+    {
+        Node* node = detectLoop(head);
+        if(node!=NULL){
+            node->next = NULL;
+        }
+        return ;
     }
 };
-
-
-// { Driver Code Starts.
 
 int main()
 {
@@ -91,11 +109,12 @@ int main()
         loopHere(head,tail,pos);
         
         Solution ob;
-        if(ob.detectLoop(head) )
-            cout<< "True\n";
+        ob.removeLoop(head);
+        
+        if( isLoop(head) || length(head)!=n )
+            cout<<"0\n";
         else
-            cout<< "False\n";
+            cout<<"1\n";
     }
 	return 0;
 }
-  // } Driver Code Ends
